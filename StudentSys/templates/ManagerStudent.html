@@ -1,0 +1,204 @@
+{% load static %}
+{% load bootstrap4 %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>学生系统</title>
+
+
+
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/font-awesome-4.7.0/css/font-awesome.css' %}">
+    <link rel="stylesheet" href="{% static 'css/metisMenu.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bk.css' %}">
+
+    <style>
+        .logo {
+          float: left;
+          height: 50px;
+          padding: 5px 10px;
+          font-size: 18px;
+          line-height: 20px;
+        }
+    </style>
+
+</head>
+
+<body>
+ <div class="king-layout-container" id="layoutPanel">
+    <!-- header -->
+
+
+
+<nav class="navbar navbar-default"  role="navigation">
+  <div class="container-fluid">
+      <a class="logo" href="#">
+            <img alt="Brand" width="40" height="40" src="{% static 'img/logo.png' %}">
+          </a>
+
+    <div class="navbar-header">
+      <a class="navbar-brand" href="http://127.0.0.1:8000/">学生选课系统</a>
+    </div>
+
+
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="">主页</a></li>
+
+        <li class="dropdown">
+
+           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              项目
+              <b class="caret"></b>
+           </a>
+            <ul class="dropdown-menu">
+                 {% for key,value in dic_project.items %}
+                <li><a href="http://127.0.0.1:8000/project?proj={{ key }}">{{key}}</a></li>
+                 <li role="separator" class="divider"></li>
+                 {% endfor %}
+            </ul>
+
+        </li>
+                  <li class="dropdown">
+
+           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              实例
+              <b class="caret"></b>
+           </a>
+            <ul class="dropdown-menu">
+                 {% for key,value in dic_project.items %}
+
+                 <li role="separator" class="divider"></li>
+                <li class="dropdown">
+                    <a href="http://127.0.0.1:8000/project?proj={{ key }}" class="dropdown-toggle" data-toggle="dropdown">
+                        {{key}}
+                    <b class="caret"></b>
+                       <ul class="droppdown-menu">
+                            {% for i in value %}
+                           <li><a href='http://127.0.0.1:8000/empfile?proj={{ key }}&exmp={{ i }}'>{{i}}</a></li>
+                            {%endfor%}
+                       </ul>
+
+           </a>
+                </li>
+                 {% endfor %}
+            </ul>
+        </li>
+
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">请登录 <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">登录</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">注册</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+    <!--导航-->
+
+
+
+    <!--  -->
+    <div class="king-layout-main">
+        <div class="king-breadcrumb">
+            <span class="king-breadcrumb-link">学生选课系统</span>
+        </div>
+
+        <div class="king-layout-content king-layout-has-slider king-flexible-setting king-flex-auto king-content-scroll">
+
+            <div class="king-layout-slider">
+                <ul class="king-menu-inline">
+                      <div>
+                        <p style="margin-left: 20px;">功能列表</p>
+                      </div>
+
+                      <li class="king-menu-submenu show-items">
+                        <div class="king-menu-submenu-title" >
+                            <span  class="glyphicon glyphicon-th-large submenu-icon" aria-hidden="true"><a style="margin-left: 20px;" href="http://127.0.0.1:8000/">管理学生表</a></span>
+                        </div>
+                      </li>
+                     <li class="king-menu-submenu show-items">
+                        <div class="king-menu-submenu-title" >
+                            <span  class="glyphicon glyphicon-th-large submenu-icon" aria-hidden="true"><a style="margin-left: 20px;" href="http://127.0.0.1:8000/">管理教师表</a></span>
+                        </div>
+                      </li>
+                      <li class="king-menu-submenu show-items">
+                        <div class="king-menu-submenu-title" >
+                            <span  class="glyphicon glyphicon-th-large submenu-icon" aria-hidden="true"><a style="margin-left: 20px;" href="http://127.0.0.1:8000/">管理课程表</a></span>
+                        </div>
+                      </li>
+                </ul>
+            </div>
+            <!--以上为左列-->
+
+
+            <div class="king-slider-content king-flex-y">
+
+                <!--右侧块内-->
+                <div class="panel panel-default">
+                  <div class="panel-heading">项目介绍</div>
+                  <div class="panel-body">
+                  </div>
+                </div>
+
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">数据展示</h3>
+                  </div>
+                    <div></div>
+                    <div id="container" style="height:400px;"></div>
+                </div>
+
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">TransE模型分析</h3>
+                  </div>
+                  <div> .</div>
+                </div>
+                <div class="king-layout-footer"> ... </div>
+            </div>
+    <!-- footer -->
+        </div>
+    </div>
+ </div>
+</body>
+
+<script src="{% static 'js/jquery-3.6.3.min.js' %}"></script>
+<script src="{% static 'js/metisMenu.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-3.4.1/js/bootstrap.min.js' %}"></script>
+<script type="text/javascript">
+
+</script>
+
+<!--JS-->
+<script type="text/javascript">
+    //layoutPanel_js_start
+    $(".king-menu-submenu-title").click(function(){
+        $(this).parent().toggleClass("show-items");
+        $(this).next().slideToggle();
+    })
+
+    $(".king-menu-item").click(function(){
+        $(".king-menu-item").removeClass("king-menu-item-selected");
+        $(this).addClass("king-menu-item-selected");
+    })
+    //layoutPanel_js_end
+</script>
+
+
+</html>
