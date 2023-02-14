@@ -10,5 +10,16 @@ class StuInfo(models.Model):
     Stu_Username=models.CharField(max_length=50)
     Stu_Password=models.CharField(max_length=50)
     def __str__(self):
-            """返回模型的字符串表示。"""
-            return (self.Stu_ID)
+        """返回模型的字符串表示。"""
+        return (self.Stu_ID)
+
+class TchInfo(models.Model):
+    Tch_ID = models.CharField(max_length=20)
+    Tch_Name = models.CharField(max_length=10)
+    Tch_College = models.CharField(max_length=40)
+    Tch_Position = models.CharField(max_length=5)
+    Tch_Username = models.CharField(max_length=50)
+    Tch_Password = models.CharField(max_length=50)
+    def __str__(self):
+        """返回模型的字符串表示。"""
+        return (self.Tch_ID)
