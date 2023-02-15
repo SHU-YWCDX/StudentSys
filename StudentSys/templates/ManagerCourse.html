@@ -153,6 +153,35 @@
                 <div class="panel panel-default">
                   <div class="panel-heading">课程信息</div>
                   <div class="panel-body">
+                      <div class="table-responsive">
+                          <table class="table">
+                            <caption class="text-center"><h3>学生信息表</h3></caption>
+                            <thead>
+                              <tr>
+                                <th>课程号</th>
+                                <th>课名</th>
+                                <th>学分</th>
+                                <th>学时</th>
+                                <th>学院号</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+
+                            {% for crs in Crs_List %}
+                              <tr>
+                                <td>{{stu.Stu_ID}}</td>
+                                <td>{{stu.Stu_Name}}</td>
+                                <td>{{stu.Stu_Gender}}</td>
+                                <td>{{stu.Stu_Age}}</td>
+                                <td>{{stu.Stu_College}}</td>
+                                <td>{{stu.Stu_Username}}</td>
+                                <td>{{stu.Stu_Password}}</td>
+                              </tr>
+                            {% endfor %}
+                            </tbody>
+                          </table>
+                        </div>
+
                   </div>
                 </div>
 
