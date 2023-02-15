@@ -8,7 +8,7 @@ class DepartInfo(models.Model):
     Dep_PhoneNum=models.CharField(max_length = 11)
 
     def __str__(self):
-        return self.Dep_ID
+        return self.Dep_Name
 
 class StuInfo(models.Model):
     Stu_ID=models.CharField(max_length=20, primary_key=True)

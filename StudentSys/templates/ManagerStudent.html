@@ -175,7 +175,7 @@
                                 <td>{{stu.Stu_Name}}</td>
                                 <td>{{stu.Stu_Gender}}</td>
                                 <td>{{stu.Stu_Age}}</td>
-                                <td>{{stu.Stu_College}}</td>
+                                <td>{{stu.Stu_Department}}</td>
                                 <td>{{stu.Stu_Username}}</td>
                                 <td>{{stu.Stu_Password}}</td>
                               </tr>
@@ -197,7 +197,7 @@
                          <form action="" method='post'>
                             {% csrf_token %}
                             <div>
-                              {% bootstrap_form stuform layout='inline' %}
+                              {% bootstrap_form stuform  %}
                             </div>
                             <div class="col-sm-12 col-md-12">
                             {% buttons %}
