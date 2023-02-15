@@ -19,6 +19,7 @@ from StudentSys import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.ManagerStu,name='ManagerStu'),
-    path('crs/',views.ManagerCrs,name='ManagerCrs')
+    path('crs/',views.ManagerCrs,name='ManagerCrs'),
+    path('tea/', views.ManagerTch, name='ManagerTch'),
     #path('',views.index)
 ]

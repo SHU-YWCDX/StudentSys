@@ -179,13 +179,13 @@
                             <!--Tch_List为教师信息列表-->
                             {% for tch in Tch_List %}
                               <tr>
-                                <td>{{tch.Stu_ID}}</td>
-                                <td>{{tch.Stu_Name}}</td>
-                                <td>{{tch.Stu_Gender}}</td>
-                                <td>{{tch.Stu_Age}}</td>
-                                <td>{{tch.Stu_College}}</td>
-                                <td>{{tch.Stu_Username}}</td>
-                                <td>{{tch.Stu_Password}}</td>
+                                <td>{{tch.Tch_ID}}</td>
+                                <td>{{tch.Tch_Name}}</td>
+                                <td>{{tch.Tch_Gender}}</td>
+                                <td>{{tch.Tch_Age}}</td>
+                                <td>{{tch.Tch_College}}</td>
+                                <td>{{tch.Tch_Username}}</td>
+                                <td>{{tch.Tch_Password}}</td>
                               </tr>
                             {% endfor %}
                             </tbody>
@@ -206,7 +206,7 @@
                             {% csrf_token %}
                             <div>
                                 <!-- stuform 为views传入参数，是教师列表-->
-                              {% bootstrap_form stuform layout='inline' %}
+                              {% bootstrap_form teaform layout='inline' %}
                             </div>
                             <div class="col-sm-12 col-md-12">
                             {% buttons %}
