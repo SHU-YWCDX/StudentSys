@@ -50,8 +50,8 @@ def ManagerStu(request):
 
 def ManagerTch(request):
     Tea_List = models.TchInfo.objects.all()
-    if(request.method != 'POST')
-
+    if(request.method != 'POST'):
+        print(1)
 
 
 
