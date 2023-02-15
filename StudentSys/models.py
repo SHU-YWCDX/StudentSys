@@ -39,7 +39,7 @@ class CourseInfo(models.Model):
     Crs_Name = models.CharField(max_length=10)
     Crs_Credit = models.IntegerField()
     Crs_Department = models.ForeignKey(DepartInfo,on_delete=models.CASCADE)
-    Crs_DepartNum = models.IntegerField()
+    Crs_Period = models.IntegerField()
    # Crs_DepartNum.Foreignkey('DepartInfo')
     def __str__(self):
         return self.Crs_ID

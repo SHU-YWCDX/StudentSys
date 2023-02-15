@@ -54,5 +54,49 @@ def ManagerTch(request):
 
 
 
+
+
+def addCrs(request):
+    try:
+        Newcrs = forms.Crs_Form(data=request.POST)
+        #print(NewStu)
+        if Newcrs.is_valid():
+            Newcrs.save()
+            return redirect('ManagerCrs')
+    except:
+        print("Add Student Error")
+
+def deleteCrs(request):
+    try:
+        DeleteCrsID = request.POST.get('DeleteCrsID')
+        #print(DeleteStuID)
+        DeleteCrs = models.CourseInfo.objects.filter(Crs_ID=DeleteCrsID).first().delete()
+        #print(DeleteStu)
+        return redirect('ManagerStu')
+    except:
+        print('删除失败，可能没有找到')
+
+
+def ManagerCrs(request):
+
+    Crs_List = models.CourseInfo.objects.all()
+    print(Crs_List)
+    if (request.method != 'POST'):
+        crsform = forms.Crs_Form()
+    elif (request.method == 'POST') & (request.POST.get('AddCrs') == 'yes'):
+        print(request.POST.get('AddCrs') )
+        addCrs(request)
+    crsform = forms.Crs_Form()
+
+    if (request.method == 'POST') & (request.POST.get('DeleteCrs') == 'yes'):
+        deleteCrs(request)
+
+    return render(request, 'ManagerCourse.html', {
+        'Crs_List': Crs_List,
+        'crsform': crsform,
+    }
+                  )
+
+
 def index(request):
     return render(request,'ManagerTeacher.html')

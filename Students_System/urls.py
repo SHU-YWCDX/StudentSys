@@ -18,6 +18,7 @@ from django.urls import path
 from StudentSys import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.ManagerStu,name='ManagerStu')
+    path('',views.ManagerStu,name='ManagerStu'),
+    path('crs/',views.ManagerCrs,name='ManagerCrs')
     #path('',views.index)
 ]
