@@ -43,6 +43,7 @@ def addTea(request):
     try:
         NewTea = forms.Tea_Form(data=request.POST)
         if NewTea.is_valid():
+            print(1)
             NewTea.save()
             return redirect('ManagerTch')
     except:
