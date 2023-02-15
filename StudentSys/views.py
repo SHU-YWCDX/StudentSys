@@ -62,7 +62,7 @@ def ManagerTch(request):
         addTea(request)
     elif(request.method == 'POST') & (request.POST.get('DeleteTch') == 'yes'):
         deleteTea(request)
-    teaform = forms.Tea_Form(request)
+    teaform = forms.Tea_Form()
     context = {'Tea_List': Tea_List,
                'teaform': teaform,}
     return render(request, 'ManagerTeacher.html', context)
