@@ -48,10 +48,33 @@ def ManagerStu(request):
                                                     }
                                                         )
 
+def addTea(request):
+    try:
+        NewTea = forms.Tea_Form(data=request.POST)
+        if NewTea.is_valid():
+            NewTea.save()
+            return redirect('ManagerTch')
+    except:
+        print("Add Teacher Error")
+
+def deleteTea(request):
+    try:
+        DeleteTeaID = request.POST.get('DeleteTeaID')
+        DeleteTea = models.TchInfo.objects.filter(Tch_ID=DeleteTeaID).first().delete()
+        return redirect('ManagerTch')
+    except:
+        print('Delete Teacher Error')
+
 def ManagerTch(request):
     Tea_List = models.TchInfo.objects.all()
-    if(request.method != 'POST'):
-        print(1)
+    if(request.method == 'POST') & (request.POST.get('AddTea') == 'yes'):
+        addTea(request)
+    elif(request.method == 'POST') & (request.POST.get('DeleteTea') == 'yes'):
+        deleteTea(request)
+    teaform = forms.Tea_Form(request)
+    context = {'Tea_List': Tea_List,
+               'teaform': teaform,}
+    return render(request, 'ManagerTeacher.html', context)
 
 
 
