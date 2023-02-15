@@ -49,7 +49,9 @@ def ManagerStu(request):
                                                         )
 
 def ManagerTch(request):
-    print(1)
+    Tea_List = models.TchInfo.objects.all()
+    if(request.method != 'POST')
+
 
 
 
