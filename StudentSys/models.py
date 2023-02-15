@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class StuInfo(models.Model):
-    Stu_ID=models.CharField(max_length=20)
+    Stu_ID=models.CharField(max_length=20,primary_key=True)
     Stu_Name=models.CharField(max_length=10)
     Stu_Gender=models.CharField(max_length=5)
     Stu_Age=models.IntegerField()
@@ -14,7 +14,7 @@ class StuInfo(models.Model):
         return (self.Stu_ID)
 
 class TchInfo(models.Model):
-    Tch_ID = models.CharField(max_length=20)
+    Tch_ID = models.CharField(max_length=20,primary_key=True)
     Tch_Name = models.CharField(max_length=10)
     Tch_College = models.CharField(max_length=40)
     Tch_Position = models.CharField(max_length=5)
