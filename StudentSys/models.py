@@ -26,9 +26,8 @@ class StuInfo(models.Model):
 class TchInfo(models.Model):
     Tch_ID = models.CharField(max_length=20,primary_key=True)
     Tch_Name = models.CharField(max_length=10)
-    #Tch_Department = models.CharField(max_length=40)
     Tch_Department = models.ForeignKey('DepartInfo',on_delete=models.CASCADE)
-    Tch_Position = models.CharField(max_length=5)
+    Tch_Position = models.CharField(max_length=10)
     Tch_Username = models.CharField(max_length=50)
     Tch_Password = models.CharField(max_length=50)
     def __str__(self):

@@ -168,22 +168,14 @@
                             </thead>
                             <tbody>
 
-                               <tr>
-                                <td>114514</td>
-                                <td>sj</td>
-                                <td>计算机</td>
-                                <td>副教授</td>
-                                <td>11114514</td>
-                                <td>22333</td>
-                              </tr>
+
                             <!--Tch_List为教师信息列表-->
                             {% for tch in Tch_List %}
                               <tr>
                                 <td>{{tch.Tch_ID}}</td>
                                 <td>{{tch.Tch_Name}}</td>
-                                <td>{{tch.Tch_Gender}}</td>
-                                <td>{{tch.Tch_Age}}</td>
                                 <td>{{tch.Tch_Department}}</td>
+                                <td>{{tch.Tch_Position}}</td>
                                 <td>{{tch.Tch_Username}}</td>
                                 <td>{{tch.Tch_Password}}</td>
                               </tr>
@@ -206,7 +198,7 @@
                             {% csrf_token %}
                             <div>
                                 <!-- stuform 为views传入参数，是教师列表-->
-                              {% bootstrap_form teaform layout='inline' %}
+                              {% bootstrap_form teaform  %}
                             </div>
                             <div class="col-sm-12 col-md-12">
                             {% buttons %}
@@ -230,7 +222,7 @@
                             {% csrf_token %}
                          <div class="input-group col-sm-12 col-md-12">
                          <span class="input-group-addon">教师工号</span>
-                         <input type="text" class="form-control" placeholder="S33" name="DeleteStuID">
+                         <input type="text" class="form-control" placeholder="S33" name="DeleteTeaID">
                          </div>
                           <div class="col-sm-12 col-md-12">
                             {% buttons %}

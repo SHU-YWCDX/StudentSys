@@ -9,6 +9,10 @@ def addStu(request):
     try:
         NewStu = forms.Stu_Form(data=request.POST)
         if NewStu.is_valid():
+            print(NewStu)
+
+            print(request.POST.get('Stu_Department'))
+
             NewStu.save()
             return redirect('ManagerStu')
     except:
@@ -43,8 +47,17 @@ def addTea(request):
     try:
         NewTea = forms.Tea_Form(data=request.POST)
         if NewTea.is_valid():
+            #print(NewTea)
+       # Tea=models.TchInfo(Tch_ID=request.POST.get('Tch_ID'),
+       #                    Tch_Name=request.POST.get('Tch_Name'),
+        #                   Tch_Department_id=request.POST.get('Tch_Department'),
+        #                   Tch_Position=request.POST.get('Tch_Position'),
+        #                   Tch_Username=request.POST.get('Tch_Username'),
+        #                   Tch_Password=request.POST.get('Tch_Password')
+        #                   )
+        #Tea.save()
             NewTea.save()
-            return redirect('ManagerTch')
+        return redirect('ManagerTch')
     except:
         print("Add Teacher Error")
 
@@ -57,13 +70,17 @@ def deleteTea(request):
         print('Delete Teacher Error')
 
 def ManagerTch(request):
-    Tea_List = models.TchInfo.objects.all()
+    print(len("教授"))
+    Tch_List = models.TchInfo.objects.all()
+    print("*****------*****")
+    print(Tch_List)
     if(request.method == 'POST') & (request.POST.get('AddTch') == 'yes'):
+        print('1111')
         addTea(request)
     elif(request.method == 'POST') & (request.POST.get('DeleteTch') == 'yes'):
         deleteTea(request)
     teaform = forms.Tea_Form()
-    context = {'Tea_List': Tea_List,
+    context = {'Tch_List': Tch_List,
                'teaform': teaform,}
     return render(request, 'ManagerTeacher.html', context)
 
@@ -91,7 +108,7 @@ def deleteCrs(request):
 def ManagerCrs(request):
 
     Crs_List = models.CourseInfo.objects.all()
-    print(Crs_List)
+    #print(Crs_List)
     if (request.method != 'POST'):
         crsform = forms.Crs_Form()
     elif (request.method == 'POST') & (request.POST.get('AddCrs') == 'yes'):
