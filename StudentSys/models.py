@@ -23,3 +23,10 @@ class TchInfo(models.Model):
     def __str__(self):
         """返回模型的字符串表示。"""
         return (self.Tch_ID)
+
+class CourseInfo(models.Model):
+    Crs_ID = models.CharField(max_length=20,primary_key=True)
+    Crs_Name = models.CharField(max_length=10)
+    Crs_Credit = models.IntegerField()
+    Crs_Period = models.IntegerField()
+    Crs_CollegeNum = models.IntegerField()

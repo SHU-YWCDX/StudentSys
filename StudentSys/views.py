@@ -48,5 +48,11 @@ def ManagerStu(request):
                                                     }
                                                         )
 
+def ManagerTch(request):
+    print(1)
+
+
+
+
 def index(request):
-    return render(request,'ManagerStudent.html')
+    return render(request,'ManagerTeacher.html')

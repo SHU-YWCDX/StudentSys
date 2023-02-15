@@ -21,3 +21,5 @@ class Stu_Form(forms.ModelForm):
                   'Stu_Password':'密码',}
 
 
+
+

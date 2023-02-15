@@ -151,24 +151,98 @@
 
                 <!--右侧块内-->
                 <div class="panel panel-default">
-                  <div class="panel-heading">项目介绍</div>
+                  <div class="panel-heading">教师列表</div>
                   <div class="panel-body">
+                        <div class="table-responsive">
+                          <table class="table">
+                            <caption class="text-center"><h3>教师信息表</h3></caption>
+                            <thead>
+                              <tr>
+                                <th>工号</th>
+                                <th>姓名</th>
+                                <th>院系</th>
+                                <th>职称</th>
+                                <th>用户名</th>
+                                <th>密码</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+
+                               <tr>
+                                <td>114514</td>
+                                <td>sj</td>
+                                <td>计算机</td>
+                                <td>副教授</td>
+                                <td>11114514</td>
+                                <td>22333</td>
+                              </tr>
+                            <!--Tch_List为教师信息列表-->
+                            {% for tch in Tch_List %}
+                              <tr>
+                                <td>{{tch.Stu_ID}}</td>
+                                <td>{{tch.Stu_Name}}</td>
+                                <td>{{tch.Stu_Gender}}</td>
+                                <td>{{tch.Stu_Age}}</td>
+                                <td>{{tch.Stu_College}}</td>
+                                <td>{{tch.Stu_Username}}</td>
+                                <td>{{tch.Stu_Password}}</td>
+                              </tr>
+                            {% endfor %}
+                            </tbody>
+                          </table>
+                        </div>
+
+
+
                   </div>
                 </div>
 
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <h3 class="panel-title">数据展示</h3>
+                    <h3 class="panel-title">新增教师</h3>
                   </div>
-                    <div></div>
+                    <div>
+                          <form action="" method='post'>
+                            {% csrf_token %}
+                            <div>
+                                <!-- stuform 为views传入参数，是教师列表-->
+                              {% bootstrap_form stuform layout='inline' %}
+                            </div>
+                            <div class="col-sm-12 col-md-12">
+                            {% buttons %}
+                                <!--AddTch在后端可以接收，后端接收到AddTch的值为yes时执行相应的数据库操纵(即添加教师)-->
+                                <input type="hidden" name="AddTch" value="yes">
+                                <input type="submit" class="btn btn-default btn-lg btn-block" value="添加教师">
+                            {% endbuttons %}
+                            </div>
+                         </form>
+
+                    </div>
                     <div id="container" style="height:400px;"></div>
                 </div>
 
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <h3 class="panel-title">TransE模型分析</h3>
+                    <h3 class="panel-title">减少教师</h3>
                   </div>
-                  <div> .</div>
+                  <div>
+                      <form action="" method='post'>
+                            {% csrf_token %}
+                         <div class="input-group col-sm-12 col-md-12">
+                         <span class="input-group-addon">教师工号</span>
+                         <input type="text" class="form-control" placeholder="S33" name="DeleteStuID">
+                         </div>
+                          <div class="col-sm-12 col-md-12">
+                            {% buttons %}
+                               <!--同AddTch一样，DeleteTch在后端可以接收，后端接收到DeleteTch的值为yes时执行相应的数据库操纵(即删除教师)-->
+                                <input type="hidden" name="DeleteTch" value="yes">
+                                <input type="submit" class="btn btn-default btn-lg btn-block" value="删除教师">
+                            {% endbuttons %}
+                          </div>
+                       </form>
+
+
+                  </div>
                 </div>
                 <div class="king-layout-footer"> ... </div>
             </div>
