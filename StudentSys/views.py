@@ -8,7 +8,6 @@ from StudentSys import forms
 def addStu(request):
     try:
         NewStu = forms.Stu_Form(data=request.POST)
-        #print(NewStu)
         if NewStu.is_valid():
             NewStu.save()
             return redirect('ManagerStu')
@@ -18,20 +17,12 @@ def addStu(request):
 def deleteStu(request):
     try:
         DeleteStuID = request.POST.get('DeleteStuID')
-        #print(DeleteStuID)
         DeleteStu = models.StuInfo.objects.filter(Stu_ID=DeleteStuID).first().delete()
-        #print(DeleteStu)
         return redirect('ManagerStu')
     except:
         print('删除失败，可能没有找到')
 
 def ManagerStu(request):
-    #Stu1=models.StuInfo(Stu_ID='S01',Stu_Name='刘华强',Stu_Gender='Stu_Gender',Stu_Age=20,Stu_College='ComputerScience',
-    #                    Stu_Username='466546',Stu_Password='154646')
-    #Stu1.save()
-    Stu1=models.StuInfo.objects.filter(Stu_ID='S01').update(Stu_Gender='男')
-    #Stu1.Stu_Gender='男'
-    #Stu1.save()
     Stu_List=models.StuInfo.objects.all()
     if (request.method != 'POST'):
         stuform=forms.Stu_Form()
@@ -67,19 +58,14 @@ def deleteTea(request):
 
 def ManagerTch(request):
     Tea_List = models.TchInfo.objects.all()
-    if(request.method == 'POST') & (request.POST.get('AddTea') == 'yes'):
+    if(request.method == 'POST') & (request.POST.get('AddTch') == 'yes'):
         addTea(request)
-    elif(request.method == 'POST') & (request.POST.get('DeleteTea') == 'yes'):
+    elif(request.method == 'POST') & (request.POST.get('DeleteTch') == 'yes'):
         deleteTea(request)
     teaform = forms.Tea_Form(request)
     context = {'Tea_List': Tea_List,
                'teaform': teaform,}
     return render(request, 'ManagerTeacher.html', context)
-
-
-
-
-
 
 def addCrs(request):
     try:
