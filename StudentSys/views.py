@@ -27,7 +27,7 @@ def deleteStu(request):
         print('删除失败，可能没有找到')
 
 def ManagerStu(request):
-    if not (request.session.get('is_login', None) == True) & (request.session.get('mode', None) == '管理员'):
+    if not (request.session.get('is_login', None) == True) & (request.session.get('mode', None) == '管理员'):#判断登录的模式是不是管理员，不是管理员的话就调转到/logout
         print(request.session.get('mode', None))
         return redirect('/logout')
     Stu_List=models.StuInfo.objects.all()
@@ -180,35 +180,61 @@ def ManagerOfrCrs(request):
                   )
 
 def Teacher(request):
-    if not (request.session.get('is_login', None)==True) &( request.session.get('mode', None)=='教师'):
+    if not (request.session.get('is_login', None)==True) &( request.session.get('mode', None)=='教师'):#判断登录模式是不是教师，不是就跳转到登录页
         return redirect('/login')
+    #根据用户名筛选出登录的Teacher
     theTeacher = models.TchInfo.objects.filter(Tch_ID=request.session.get('user_id')).first()
+    #筛选出该Teacher开设的课程(在OfferedCourse中筛选)
     OfferCrs_List = models.OfferedCourse.objects.filter(OCrs_Teacher=theTeacher)
-    crsid=request.GET.get('tcrsid')
+    crsid=request.GET.get('tcrsid')#见Teacher.html 136行的url，此处的tcrsid参数就是从那里传过来的
     crs=models.OfferedCourse.objects.filter(id=crsid).first()
+    #筛选出选了当前课程的学生(在选课表中筛选)
     SelectCrs_List = models.SelectCourse.objects.filter(SelCrs_Course=crs)
 
     print("*****************")
-    if (request.method =='POST')&(request.POST.get('AddGrade')=='yes'):
+    if (request.method =='POST')&(request.POST.get('AddGrade')=='yes'):#判断是否是添加成绩的POST
         slctform = forms.Grade_Form(data=request.POST)
         if slctform.is_valid():
             slcStuID=slctform.cleaned_data['ID']
             slcStuGrade=slctform.cleaned_data['Grade']
-            slcstu=models.StuInfo.objects.filter(Stu_ID=slcStuID).first()
+            slcstu=models.StuInfo.objects.filter(Stu_ID=slcStuID).first()#根据ID筛选学生信息
             print(slcStuGrade)
             print(slcstu)
-            slcitem=models.SelectCourse.objects.filter(SelCrs_Stu=slcstu, SelCrs_Course=crs).update(SelCrs_Grade=slcStuGrade)
+            slcitem=models.SelectCourse.objects.filter(SelCrs_Stu=slcstu, SelCrs_Course=crs).update(SelCrs_Grade=slcStuGrade)#根据学生和课程在选课表里筛选出对应的记录，把它的成绩进行更新
             print(slcitem)
     slctform = forms.Grade_Form()
     return render(request,'Teacher.html',{
-        'OfferCrs_List' : OfferCrs_List,
+        'OfferCrs_List' : OfferCrs_List,#前端需要的参数都传入
         'SelectCrs_List' : SelectCrs_List,
         'slctform' : slctform,
         'crs':crs
                                          })
 
+#学生函数：
+"""
+先判断登录
+前端左列显示三个链接：
+1.选课
+2.退课
+3.已修课程(可看到成绩单)
+选课:
+后端筛选出开课表中所有信息在前端列出
+前端可列出一张开课单，后端筛选出后以筛选出后在选课表填入相应信息
+退课:
+后端筛选出该学生选的所有课程在前端列出
+前端可填相关信息，供后端正确筛选出，然后delete掉
+已修课程：
+列出该学生所有选课信息,（成绩为空的去掉，这个功能暂时不做，把该学生所有选课信息筛选出并列出就是成功）
+
+前端参照Teacher
+建议创建3个html
+分别对应选课，退课，已修课程
+"""
+
+
+#登录功能实现
 def login(request):
-    if (request.session.get('is_login', None)==True) &( request.session.get('mode', None)=='管理员'):
+    if (request.session.get('is_login', None)==True) &( request.session.get('mode', None)=='管理员'):#判断是否登录过，登陆过就直接跳转到/stu,
         return redirect('/stu')
     message=''
     if (request.method != 'POST'):
@@ -264,7 +290,7 @@ def login(request):
 
 
 def logout(request):
-     if not request.session.get('is_login', None):
+     if not request.session.get('is_login', None):#logout就是刷新session,即清空了登录信息，然后再跳转到login
       # 如果本来就未登录，也就没有登出一说
       return redirect("/login")
      request.session.flush()
