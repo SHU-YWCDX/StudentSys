@@ -93,7 +93,10 @@
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
-
+         {% if request.session.is_login %}
+        <li><a href="#" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" >当前在线：{{ request.session.user_name }}</a></li>
+        <li><a href="/logout/" rel="external nofollow" >登出</a></li>
+        {% else %}
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">请登录 <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -102,6 +105,7 @@
             <li><a href="#">注册</a></li>
           </ul>
         </li>
+        {% endif %}
       </ul>
     </div>
   </div>
@@ -129,17 +133,22 @@
 
                       <li class="king-menu-submenu show-items">
                         <div class="king-menu-submenu-title" >
-                            <span  class="glyphicon glyphicon-th-large submenu-icon" aria-hidden="true"><a style="margin-left: 20px;" href="http://127.0.0.1:8000/">管理学生表</a></span>
+                            <span  class="glyphicon glyphicon-th-large submenu-icon" aria-hidden="true"><a style="margin-left: 20px;" href="http://127.0.0.1:8000/stu">管理学生表</a></span>
                         </div>
                       </li>
                      <li class="king-menu-submenu show-items">
                         <div class="king-menu-submenu-title" >
-                            <span  class="glyphicon glyphicon-th-large submenu-icon" aria-hidden="true"><a style="margin-left: 20px;" href="http://127.0.0.1:8000/">管理教师表</a></span>
+                            <span  class="glyphicon glyphicon-th-large submenu-icon" aria-hidden="true"><a style="margin-left: 20px;" href="http://127.0.0.1:8000/tea">管理教师表</a></span>
                         </div>
                       </li>
                       <li class="king-menu-submenu show-items">
                         <div class="king-menu-submenu-title" >
-                            <span  class="glyphicon glyphicon-th-large submenu-icon" aria-hidden="true"><a style="margin-left: 20px;" href="http://127.0.0.1:8000/">管理课程表</a></span>
+                            <span  class="glyphicon glyphicon-th-large submenu-icon" aria-hidden="true"><a style="margin-left: 20px;" href="http://127.0.0.1:8000/crs">管理课程表</a></span>
+                        </div>
+                      </li>
+                    <li class="king-menu-submenu show-items">
+                        <div class="king-menu-submenu-title" >
+                            <span  class="glyphicon glyphicon-th-large submenu-icon" aria-hidden="true"><a style="margin-left: 20px;" href="http://127.0.0.1:8000/ofrcrs">管理开课表</a></span>
                         </div>
                       </li>
                 </ul>
@@ -168,14 +177,7 @@
                             </thead>
                             <tbody>
 
-                               <tr>
-                                <td>114514</td>
-                                <td>sj</td>
-                                <td>计算机</td>
-                                <td>副教授</td>
-                                <td>11114514</td>
-                                <td>22333</td>
-                              </tr>
+
                             <!--Tch_List为教师信息列表-->
                             {% for tch in Tch_List %}
                               <tr>
@@ -205,7 +207,7 @@
                             {% csrf_token %}
                             <div>
                                 <!-- stuform 为views传入参数，是教师列表-->
-                              {% bootstrap_form teaform layout='inline' %}
+                              {% bootstrap_form teaform  %}
                             </div>
                             <div class="col-sm-12 col-md-12">
                             {% buttons %}
@@ -217,7 +219,7 @@
                          </form>
 
                     </div>
-                    <div id="container" style="height:400px;"></div>
+
                 </div>
 
                 <div class="panel panel-default">
@@ -229,7 +231,7 @@
                             {% csrf_token %}
                          <div class="input-group col-sm-12 col-md-12">
                          <span class="input-group-addon">教师工号</span>
-                         <input type="text" class="form-control" placeholder="S33" name="DeleteStuID">
+                         <input type="text" class="form-control" placeholder="S33" name="DeleteTeaID">
                          </div>
                           <div class="col-sm-12 col-md-12">
                             {% buttons %}

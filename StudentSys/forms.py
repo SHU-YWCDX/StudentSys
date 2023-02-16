@@ -55,3 +55,28 @@ class Tea_Form(forms.ModelForm):
                   'Tch_Position':'职位',
                   'Tch_Username':'用户名',
                   'Tch_Password':'密码',}
+
+
+class OfrCrs_Form(forms.ModelForm):
+    class Meta:
+        model = models.OfferedCourse
+        fields = ('OCrs_Term',
+                  'OCrs_Course',
+                  'OCrs_Teacher',
+                  'Ocrs_ClassTime',
+                  )
+
+        labels = {'OCrs_Term':'学期',
+                  'OCrs_Course':'课程号',
+                  'OCrs_Teacher':'教师',
+                  'Ocrs_ClassTime':'上课时间',}
+
+
+class Grade_Form(forms.Form):
+    ID = forms.CharField(label="学生号",max_length=128,widget=forms.TextInput(attrs={'class': 'form-control'}))
+    Grade = forms.IntegerField()
+
+class login_form(forms.Form):
+    username = forms.CharField(label="用户名", max_length=128, widget=forms.TextInput(attrs={'class': 'form-control'}))
+    password = forms.CharField(label="密码",   max_length=256, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+

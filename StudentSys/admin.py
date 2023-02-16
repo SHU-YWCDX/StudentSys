@@ -5,3 +5,4 @@ from StudentSys import models
 #admin.site.register(models.TchInfo)
 #admin.site.register(models.StuInfo)
 admin.site.register(models.DepartInfo)
+admin.site.register(models.SelectCourse)
