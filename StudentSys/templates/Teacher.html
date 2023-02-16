@@ -133,7 +133,7 @@
                       {% for crs in OfferCrs_List %}
                       <li class="king-menu-submenu show-items">
                         <div class="king-menu-submenu-title" >
-                            <span  class="glyphicon glyphicon-th-large submenu-icon" aria-hidden="true"><a style="margin-left: 20px;" href="http://127.0.0.1:8000/teacher?tcrs={{crs}}">{{crs.OCrs_Course}}</a></span>
+                            <span  class="glyphicon glyphicon-th-large submenu-icon" aria-hidden="true"><a style="margin-left: 20px;" href="http://127.0.0.1:8000/teacher?tcrsid={{crs.id}}">{{crs.OCrs_Course}}</a></span>
                         </div>
                       </li>
                       {% endfor %}
@@ -166,7 +166,7 @@
                               <tr>
                                 <td>{{slcrs.SelCrs_Stu.Stu_ID}}</td>
                                 <td>{{slcrs.SelCrs_Stu.Stu_Name}}</td>
-                                <td>{{slcrs.SelCrs_Grader}}</td>
+                                <td>{{slcrs.SelCrs_Grade}}</td>
                               </tr>
                             {% endfor %}
                             </tbody>
@@ -183,8 +183,8 @@
                           <form action="" method='post'>
                             {% csrf_token %}
                             <div>
-                            <!--  {% bootstrap_form slctform  %} -->
-                            {{slctform}}
+                              {% bootstrap_form slctform  layout="inline" %}
+
                             </div>
                             <div class="col-sm-12 col-md-12">
                             {% buttons %}

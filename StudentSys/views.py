@@ -184,18 +184,28 @@ def Teacher(request):
         return redirect('/login')
     theTeacher = models.TchInfo.objects.filter(Tch_ID=request.session.get('user_id')).first()
     OfferCrs_List = models.OfferedCourse.objects.filter(OCrs_Teacher=theTeacher)
-    crs=request.GET.get('crs')
-    print("选的课是")
-    print(crs)
+    crsid=request.GET.get('tcrsid')
+    crs=models.OfferedCourse.objects.filter(id=crsid).first()
     SelectCrs_List = models.SelectCourse.objects.filter(SelCrs_Course=crs)
-    slctform = forms.Select_Form()
+
     print("*****************")
-    print(slctform)
+    if (request.method =='POST')&(request.POST.get('AddGrade')=='yes'):
+        slctform = forms.Grade_Form(data=request.POST)
+        if slctform.is_valid():
+            slcStuID=slctform.cleaned_data['ID']
+            slcStuGrade=slctform.cleaned_data['Grade']
+            slcstu=models.StuInfo.objects.filter(Stu_ID=slcStuID).first()
+            print(slcStuGrade)
+            print(slcstu)
+            slcitem=models.SelectCourse.objects.filter(SelCrs_Stu=slcstu, SelCrs_Course=crs).update(SelCrs_Grade=slcStuGrade)
+            print(slcitem)
+    slctform = forms.Grade_Form()
     return render(request,'Teacher.html',{
         'OfferCrs_List' : OfferCrs_List,
         'SelectCrs_List' : SelectCrs_List,
         'slctform' : slctform,
-                                            })
+        'crs':crs
+                                         })
 
 def login(request):
     if (request.session.get('is_login', None)==True) &( request.session.get('mode', None)=='管理员'):
