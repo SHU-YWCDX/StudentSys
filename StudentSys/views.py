@@ -179,6 +179,23 @@ def ManagerOfrCrs(request):
     }
                   )
 
+def Teacher(request):
+    if not (request.session.get('is_login', None)==True) &( request.session.get('mode', None)=='教师'):
+        return redirect('/login')
+    theTeacher = models.TchInfo.objects.filter(Tch_ID=request.session.get('user_id')).first()
+    OfferCrs_List = models.OfferedCourse.objects.filter(OCrs_Teacher=theTeacher)
+    crs=request.GET.get('crs')
+    print("选的课是")
+    print(crs)
+    SelectCrs_List = models.SelectCourse.objects.filter(SelCrs_Course=crs)
+    slctform = forms.Select_Form()
+    print("*****************")
+    print(slctform)
+    return render(request,'Teacher.html',{
+        'OfferCrs_List' : OfferCrs_List,
+        'SelectCrs_List' : SelectCrs_List,
+        'slctform' : slctform,
+                                            })
 
 def login(request):
     if (request.session.get('is_login', None)==True) &( request.session.get('mode', None)=='管理员'):
@@ -213,7 +230,7 @@ def login(request):
                     request.session['user_id'] = user.Tch_ID
                     request.session['user_name'] = user.Tch_Name
                     request.session['mode'] = '教师'
-                    return redirect('/stu')
+                    return redirect('/')
                 else:
                     message = "密码不正确！"
             except:
@@ -246,3 +263,6 @@ def logout(request):
      # del request.session['user_id']
      # del request.session['user_name']
      return redirect("/login")
+
+def test(request):
+    return render(request,'Teacher.html')

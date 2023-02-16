@@ -72,6 +72,18 @@ class OfrCrs_Form(forms.ModelForm):
                   'Ocrs_ClassTime':'上课时间',}
 
 
+class Select_Form(forms.Form):
+    class Meta:
+        models = models.SelectCourse
+        fields=(
+            'SelCrs_Stu',
+            'SelCrs_Course',
+            'SelCrs_Grade',
+                 )
+        labels = {  'SelCrs_Stu':'学生',
+                    'SelCrs_Course':'课程',
+                    'SelCrs_Grade':'成绩', }
+
 
 class login_form(forms.Form):
     username = forms.CharField(label="用户名", max_length=128, widget=forms.TextInput(attrs={'class': 'form-control'}))
