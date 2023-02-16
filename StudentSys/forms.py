@@ -21,7 +21,6 @@ class Stu_Form(forms.ModelForm):
                   'Stu_Username':'用户名',
                   'Stu_Password':'密码',}
 
-
 class Crs_Form(forms.ModelForm):
     class Meta:
         model = models.CourseInfo
@@ -56,7 +55,6 @@ class Tea_Form(forms.ModelForm):
                   'Tch_Username':'用户名',
                   'Tch_Password':'密码',}
 
-
 class OfrCrs_Form(forms.ModelForm):
     class Meta:
         model = models.OfferedCourse
@@ -71,6 +69,17 @@ class OfrCrs_Form(forms.ModelForm):
                   'OCrs_Teacher':'教师',
                   'Ocrs_ClassTime':'上课时间',}
 
+class SelCrs_Form(forms.ModelForm):
+
+    class Meta:
+        model = models.SelectCourse
+        fields = ('SelCrs_Stu',
+                  'SelCrs_Course',
+                  'SelCrs_Grade',)
+
+        labels = {'SelCrs_Stu': '学生姓名',
+                  'SelCrs_Course': '课程号',
+                  'SelCrs_Grade': '成绩',}
 
 class Grade_Form(forms.Form):
     ID = forms.CharField(label="学生号",max_length=128,widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -80,3 +89,6 @@ class login_form(forms.Form):
     username = forms.CharField(label="用户名", max_length=128, widget=forms.TextInput(attrs={'class': 'form-control'}))
     password = forms.CharField(label="密码",   max_length=256, widget=forms.PasswordInput(attrs={'class': 'form-control'}))
 
+#辅助类表单
+class search_Crs(forms.Form):
+    Crs_name = forms.CharField(label="课程名称", max_length=20)

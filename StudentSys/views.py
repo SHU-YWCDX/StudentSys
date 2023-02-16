@@ -231,6 +231,49 @@ def Teacher(request):
 分别对应选课，退课，已修课程
 """
 
+#选课
+def addSelCrs(request):
+        #列出所有或者指定的课程
+        if (request.method == 'POST') & (request.POST.get('CrsName') == 'yes'):
+            OfrCrs_List = models.OfferedCourse.objects.get(OCrs_Course=forms.search_Crs(data=request.POST))
+        else:
+            OfrCrs_List = models.OfferedCourse.objects.all()
+        if (request.method == 'POST') & (request.POST.get('AddCrs') == 'yes'):
+            New_SelCrs = forms.SelCrs_Form(data=request.POST)
+            if New_SelCrs.is_valid():
+                New_SelCrs.save()
+        SelCrsform = forms.SelCrs_Form()
+        searchform = forms.search_Crs()
+        context = {'OfrCrs_List': OfrCrs_List,
+                   'SelCrsform': SelCrsform,
+                   'searchform': searchform}
+        return render(request, 'addSelCrs.html', context)
+
+
+#退课
+def delSelCrs(request):
+    #获取学生的选课表
+    SelCrs_List = models.SelectCourse.objects.get(SelCrs_Stu=models.StuInfo.objects.get(Stu_ID=request.session['user_id']))
+    if (request.method == 'POST') & (request.POST.get('DelCrs') == 'yes'):
+        Delcrs = forms.search_Crs(data=request.POST)
+        models.OfferedCourse.objects.filter(
+                                            SelCrs_Course=Delcrs,
+                                            SelCrs_Stu=models.StuInfo.objects.get(Stu_ID=request.session['user_id'])
+        ).delete()
+    searchform = forms.search_Crs()
+    context = {'SelCrs_List': SelCrs_List,
+               'searchform': searchform}
+    return render(request, 'delSelCrs.html', context)
+#已修课程
+def viewSelCrs(request):
+    SelCrs_List = models.SelectCourse.objects.get(SelCrs_Stu=models.StuInfo.objects.get(Stu_ID=request.session['user_id']))
+    context = {'SelCrs_List': SelCrs_List}
+    return render(request, 'viewSelCrs.html', context)
+
+#学生函数
+def Students(request):
+    if not (request.session.get('is_login', None)==True) &( request.session.get('mode', None)=='学生'):
+        return redirect('/login')
 
 #登录功能实现
 def login(request):
