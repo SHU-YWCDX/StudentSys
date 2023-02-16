@@ -21,7 +21,10 @@ urlpatterns = [
     path('stu/',views.ManagerStu,name='ManagerStu'),
     path('crs/',views.ManagerCrs,name='ManagerCrs'),
     path('tea/', views.ManagerTch, name='ManagerTch'),
+    path('ofrcrs/',views.ManagerOfrCrs,name='ManagerOfrCrs'),
     path('login/',views.login),
-    path('logout/',views.logout)
+    path('logout/',views.logout),
+    path('',views.logout)
+
     #path('',views.index)
 ]

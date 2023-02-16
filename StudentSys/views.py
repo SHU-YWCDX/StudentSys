@@ -73,7 +73,7 @@ def deleteTea(request):
         print('Delete Teacher Error')
 
 def ManagerTch(request):
-    if (request.session.get('is_login', None) == True) & (request.session.get('mode', None) == '管理员'):
+    if not (request.session.get('is_login', None) == True) & (request.session.get('mode', None) == '管理员'):
         return redirect('/logout')
     Tch_List = models.TchInfo.objects.all()
     print("*****------*****")
@@ -110,7 +110,7 @@ def deleteCrs(request):
 
 
 def ManagerCrs(request):
-    if (request.session.get('is_login', None) == True) & (request.session.get('mode', None) == '管理员'):
+    if not (request.session.get('is_login', None) == True) & (request.session.get('mode', None) == '管理员'):
         return redirect('/logout')
     Crs_List = models.CourseInfo.objects.all()
     #print(Crs_List)
@@ -127,6 +127,55 @@ def ManagerCrs(request):
     return render(request, 'ManagerCourse.html', {
         'Crs_List': Crs_List,
         'crsform': crsform,
+    }
+                  )
+
+
+def addOfferCrs(request):
+    try:
+        Newcrs = forms.OfrCrs_Form(data=request.POST)
+        #print(NewStu)
+        if Newcrs.is_valid():
+            Newcrs.save()
+            return redirect('ManagerOfrCrs')
+    except:
+        print("Add Student Error")
+
+def deleteOfferCrs(request):
+    #try:
+        Delcrs = forms.OfrCrs_Form(data=request.POST)
+        # print(NewStu)
+        if Delcrs.is_valid():
+            DelOfCrs=models.OfferedCourse.objects.filter(
+                                                            OCrs_Term = Delcrs.cleaned_data['OCrs_Term'],
+                                                            OCrs_Course = Delcrs.cleaned_data['OCrs_Course'],
+                                                            OCrs_Teacher = Delcrs.cleaned_data['OCrs_Teacher'],
+                                                            Ocrs_ClassTime = Delcrs.cleaned_data['Ocrs_ClassTime'],
+            ).delete()
+            return redirect('/')
+    #except:
+    #    print('删除失败，可能没有找到')
+
+
+def ManagerOfrCrs(request):
+    if not (request.session.get('is_login', None) == True) & (request.session.get('mode', None) == '管理员'):
+        return redirect('/logout')
+    OfferCrs_List = models.OfferedCourse.objects.all()
+    #print(Crs_List)
+    if (request.method != 'POST'):
+        Offercrsform = forms.OfrCrs_Form()
+    elif (request.method == 'POST') & (request.POST.get('AddOfferCrs') == 'yes'):
+        print(request.POST.get('AddOfferCrs') )
+        addOfferCrs(request)
+    Offercrsform = forms.OfrCrs_Form()
+    DelOfcrsform = forms.OfrCrs_Form()
+    if (request.method == 'POST') & (request.POST.get('DeleteOfferCrs') == 'yes'):
+        deleteOfferCrs(request)
+
+    return render(request, 'ManagerOfferCourse.html', {
+        'OfferCrs_List': OfferCrs_List,
+        'Offercrsform': Offercrsform,
+        'DelOfcrsform': DelOfcrsform,
     }
                   )
 
