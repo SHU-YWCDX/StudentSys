@@ -73,13 +73,13 @@ class SelCrs_Form(forms.ModelForm):
 
     class Meta:
         model = models.SelectCourse
-        fields = ('SelCrs_Stu',
+        fields = (
                   'SelCrs_Course',
-                  'SelCrs_Grade',)
+                  )
 
-        labels = {'SelCrs_Stu': '学生姓名',
-                  'SelCrs_Course': '课程号',
-                  'SelCrs_Grade': '成绩',}
+        labels = {
+                  'SelCrs_Course': '选择课程',
+                  }
 
 class Grade_Form(forms.Form):
     ID = forms.CharField(label="学生号",max_length=128,widget=forms.TextInput(attrs={'class': 'form-control'}))
@@ -92,3 +92,7 @@ class login_form(forms.Form):
 #辅助类表单
 class search_Crs(forms.Form):
     Crs_name = forms.CharField(label="课程名称", max_length=20)
+
+class stu_dele_form(forms.Form):
+    id = forms.IntegerField(label="课程序号")
+

@@ -233,16 +233,32 @@ def Teacher(request):
 
 #选课
 def addSelCrs(request):
+        if not (request.session.get('is_login', None) == True) & (request.session.get('mode', None) == '学生'):
+            return redirect('/login')
         #列出所有或者指定的课程
-        if (request.method == 'POST') & (request.POST.get('CrsName') == 'yes'):
-            OfrCrs_List = models.OfferedCourse.objects.get(OCrs_Course=forms.search_Crs(data=request.POST))
+        #print('sssss')
+        if (request.method == 'POST') & (request.POST.get('search') == 'yes'):
+            crsinfo=models.CourseInfo.objects.filter(Crs_Name=request.POST.get('Crs_name'))
+            print(crsinfo)
+            OfrCrs_List=[]
+            for crsitem in crsinfo:
+                OfrCrs_List += models.OfferedCourse.objects.filter(OCrs_Course = crsitem)
+            print('yes')
         else:
             OfrCrs_List = models.OfferedCourse.objects.all()
+            #print('no')
         if (request.method == 'POST') & (request.POST.get('AddCrs') == 'yes'):
             New_SelCrs = forms.SelCrs_Form(data=request.POST)
             if New_SelCrs.is_valid():
-                New_SelCrs.save()
+                SeldCrs=New_SelCrs.cleaned_data['SelCrs_Course']
+                Stu=models.StuInfo.objects.filter(Stu_ID=request.session.get('user_id')).first()
+                print(Stu)
+                selCrs=models.SelectCourse(SelCrs_Stu=Stu,SelCrs_Course=SeldCrs)
+                selCrs.save()
         SelCrsform = forms.SelCrs_Form()
+        #SelCrsform.Meta.model.SelCrs_Course.empty_label = "******"
+        #print(SelCrsform.Meta.model.SelCrs_Course.empty_label)
+        #print(SelCrsform.Meta.model.SelCrs_Course.queryset)
         searchform = forms.search_Crs()
         context = {'OfrCrs_List': OfrCrs_List,
                    'SelCrsform': SelCrsform,
@@ -253,20 +269,21 @@ def addSelCrs(request):
 #退课
 def delSelCrs(request):
     #获取学生的选课表
-    SelCrs_List = models.SelectCourse.objects.get(SelCrs_Stu=models.StuInfo.objects.get(Stu_ID=request.session['user_id']))
+    SelCrs_List = models.SelectCourse.objects.filter(SelCrs_Stu=models.StuInfo.objects.get(Stu_ID=request.session['user_id']))
     if (request.method == 'POST') & (request.POST.get('DelCrs') == 'yes'):
-        Delcrs = forms.search_Crs(data=request.POST)
-        models.OfferedCourse.objects.filter(
-                                            SelCrs_Course=Delcrs,
-                                            SelCrs_Stu=models.StuInfo.objects.get(Stu_ID=request.session['user_id'])
-        ).delete()
-    searchform = forms.search_Crs()
+        Delcrs = forms.stu_dele_form(data=request.POST)
+        print(Delcrs)
+        if(Delcrs.is_valid()):
+            models.SelectCourse.objects.filter(id=Delcrs.cleaned_data['id']
+                                            ).delete()
+    #searchform = forms.search_Crs()
+    Delcrs = forms.stu_dele_form()
     context = {'SelCrs_List': SelCrs_List,
-               'searchform': searchform}
+               'Delcrs': Delcrs}
     return render(request, 'delSelCrs.html', context)
 #已修课程
 def viewSelCrs(request):
-    SelCrs_List = models.SelectCourse.objects.get(SelCrs_Stu=models.StuInfo.objects.get(Stu_ID=request.session['user_id']))
+    SelCrs_List = models.SelectCourse.objects.filter(SelCrs_Stu=models.StuInfo.objects.get(Stu_ID=request.session['user_id']))
     context = {'SelCrs_List': SelCrs_List}
     return render(request, 'viewSelCrs.html', context)
 
@@ -274,6 +291,7 @@ def viewSelCrs(request):
 def Students(request):
     if not (request.session.get('is_login', None)==True) &( request.session.get('mode', None)=='学生'):
         return redirect('/login')
+    return redirect('/student/select')
 
 #登录功能实现
 def login(request):
@@ -309,7 +327,7 @@ def login(request):
                     request.session['user_id'] = user.Tch_ID
                     request.session['user_name'] = user.Tch_Name
                     request.session['mode'] = '教师'
-                    return redirect('/')
+                    return redirect('/teacher')
                 else:
                     message = "密码不正确！"
             except:
@@ -322,7 +340,7 @@ def login(request):
                     request.session['user_id'] = user.Stu_ID
                     request.session['user_name'] = user.Stu_Name
                     request.session['mode'] = '学生'
-                    return redirect('/stu')
+                    return redirect('/student')
                 else:
                     message = "密码不正确！"
             except:

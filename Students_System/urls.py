@@ -24,8 +24,11 @@ urlpatterns = [
     path('ofrcrs/',views.ManagerOfrCrs,name='ManagerOfrCrs'),
     path('login/',views.login),
     path('logout/',views.logout),
-    path('',views.Teacher),
+    path('',views.delSelCrs),
     path('teacher/',views.Teacher),
     path('student/', views.Students),
+    path('student/select',views.addSelCrs),
+    path('student/delete',views.delSelCrs),
+    path('student/course', views.viewSelCrs),
     #path('',views.index)
 ]
