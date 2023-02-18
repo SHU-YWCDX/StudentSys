@@ -50,45 +50,8 @@
       <ul class="nav navbar-nav">
         <li class="active"><a href="">主页</a></li>
 
-        <li class="dropdown">
 
-           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              项目
-              <b class="caret"></b>
-           </a>
-            <ul class="dropdown-menu">
-                 {% for key,value in dic_project.items %}
-                <li><a href="http://127.0.0.1:8000/project?proj={{ key }}">{{key}}</a></li>
-                 <li role="separator" class="divider"></li>
-                 {% endfor %}
-            </ul>
 
-        </li>
-                  <li class="dropdown">
-
-           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              实例
-              <b class="caret"></b>
-           </a>
-            <ul class="dropdown-menu">
-                 {% for key,value in dic_project.items %}
-
-                 <li role="separator" class="divider"></li>
-                <li class="dropdown">
-                    <a href="http://127.0.0.1:8000/project?proj={{ key }}" class="dropdown-toggle" data-toggle="dropdown">
-                        {{key}}
-                    <b class="caret"></b>
-                       <ul class="droppdown-menu">
-                            {% for i in value %}
-                           <li><a href='http://127.0.0.1:8000/empfile?proj={{ key }}&exmp={{ i }}'>{{i}}</a></li>
-                            {%endfor%}
-                       </ul>
-
-           </a>
-                </li>
-                 {% endfor %}
-            </ul>
-        </li>
 
       </ul>
 
@@ -171,9 +134,7 @@
                             <tbody>
 
 
-                            {% if message %}
-                                <div class="alert alert-warning">{{ message }}</div>
-                            {% endif %}
+
                             {% for slcrs in OfrCrs_List %}
                               <tr>
                                 <td>{{slcrs.OCrs_Term}}</td>
@@ -215,6 +176,9 @@
                   </div>
                   <div>
                       <form action="" method='post'>
+                           {% if message %}
+                                <div class="alert alert-warning">{{ message }}</div>
+                            {% endif %}
                             {% csrf_token %}
                             <div>
                               {% bootstrap_form SelCrsform  %}
