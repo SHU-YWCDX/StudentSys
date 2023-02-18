@@ -256,8 +256,8 @@ def addSelCrs(request):
         if (request.method == 'POST') & (request.POST.get('AddCrs') == 'yes'):
             New_SelCrs = forms.SelCrs_Form(data=request.POST)
             if New_SelCrs.is_valid():
-                if models.SelectCourse.objects.filter(SelCrs_Stu=models.StuInfo.objects.filter(Stu_ID=request.session['user_id']).first(),
-                                                      SelCrs_Course=New_SelCrs.cleaned_data['SelCrs_Course']) is not None:
+                if models.SelectCourse.objects.filter(SelCrs_Stu=models.StuInfo.objects.get(Stu_ID=request.session['user_id']),
+                                                      SelCrs_Course=New_SelCrs.cleaned_data['SelCrs_Course']).first() is not None:
                     print("You have chosen this course")
                 else:
                     SeldCrs=New_SelCrs.cleaned_data['SelCrs_Course']
@@ -284,10 +284,13 @@ def delSelCrs(request):
     SelCrs_List = models.SelectCourse.objects.filter(SelCrs_Stu=models.StuInfo.objects.get(Stu_ID=request.session['user_id']))
     if (request.method == 'POST') & (request.POST.get('DelCrs') == 'yes'):
         Delcrs = forms.stu_dele_form(data=request.POST)
-        print(Delcrs)
+#        print(Delcrs)
         if(Delcrs.is_valid()):
-            models.SelectCourse.objects.filter(id=Delcrs.cleaned_data['id']
-                                            ).delete()
+            if models.SelectCourse.objects.filter(id=Delcrs.cleaned_data['id'],
+                                                  SelCrs_Stu=models.StuInfo.objects.get(Stu_ID=request.session['user_id'])).first() is None:
+                print("You have not this course")
+            else:
+                models.SelectCourse.objects.filter(id=Delcrs.cleaned_data['id']).delete()
     #searchform = forms.search_Crs()
     Delcrs = forms.stu_dele_form()
     context = {'SelCrs_List': SelCrs_List,
