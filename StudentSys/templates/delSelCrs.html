@@ -171,7 +171,9 @@
                             <tbody>
 
 
-
+                            {% if message %}
+                                <div class="alert alert-warning">{{ message }}</div>
+                            {% endif %}
                             {% for slcrs in SelCrs_List %}
                               <tr>
                                 <td>{{slcrs.id}}</td>
