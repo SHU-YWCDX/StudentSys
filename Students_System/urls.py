@@ -24,7 +24,7 @@ urlpatterns = [
     path('ofrcrs/',views.ManagerOfrCrs,name='ManagerOfrCrs'),
     path('login/',views.login),
     path('logout/',views.logout),
-    path('',views.delSelCrs),
+    path('',views.login),
     path('teacher/',views.Teacher),
     path('student/', views.Students),
     path('student/select',views.addSelCrs),

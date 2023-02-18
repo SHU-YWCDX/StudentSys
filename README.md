@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # StudentSys 学生选课系统
 ### 运行环境
 #### windows 10/11
@@ -19,3 +20,7 @@ python manage.py runserver
 账号:123456
 密码:123456
 ```
+=======
+# StudentSys
+学生选课系统
+>>>>>>> origin/master
