@@ -19,7 +19,7 @@
       <console name="Connection 1" type="STANDARD" schema="" session="Main" />
     </connection>
     <connection id="362ac063-036e-4d0f-96ab-651a028d6d9f">
-      <console name="Connection 2" type="STANDARD" schema="" session="Main"><![CDATA[select SelCrs_Grade from SelectCourse]]></console>
+      <console name="Connection 2" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">

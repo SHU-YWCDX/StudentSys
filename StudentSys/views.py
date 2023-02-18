@@ -9,9 +9,11 @@ def addStu(request):
     try:
         NewStu = forms.Stu_Form(data=request.POST)
         if NewStu.is_valid():
-            print(NewStu)
+            if models.StuInfo.objects.filter(Stu_Name=NewStu.Meta.model.Stu_Name) is not None:
+                print("Username has existed")
+            #print(NewStu)
 
-            print(request.POST.get('Stu_Department'))
+            #print(request.POST.get('Stu_Department'))
 
             NewStu.save()
             return redirect('ManagerStu')
@@ -50,6 +52,9 @@ def addTea(request):
     try:
         NewTea = forms.Tea_Form(data=request.POST)
         if NewTea.is_valid():
+           # print(models.TchInfo.objects.filter(Tch_Username=NewTea.Meta.model.Tch_Username))
+            if models.TchInfo.objects.filter(Tch_Username=NewTea.Meta.model.Tch_Username) is not None:
+                print("Username has existed")
             #print(NewTea)
        # Tea=models.TchInfo(Tch_ID=request.POST.get('Tch_ID'),
        #                    Tch_Name=request.POST.get('Tch_Name'),
@@ -59,7 +64,8 @@ def addTea(request):
         #                   Tch_Password=request.POST.get('Tch_Password')
         #                   )
         #Tea.save()
-            NewTea.save()
+            else:
+                NewTea.save()
         return redirect('ManagerTch')
     except:
         print("Add Teacher Error")
@@ -325,7 +331,7 @@ def login(request):
                 message = "用户不存在！"
             #教师登录
             try:
-                user = models.TchInfo.objects.get(Tch_Username=username)
+                user = models.TchInfo.objects.filter(Tch_Username=username).first()
                 if user.Tch_Password == password:
                     request.session['is_login'] = True
                     request.session['user_id'] = user.Tch_ID
