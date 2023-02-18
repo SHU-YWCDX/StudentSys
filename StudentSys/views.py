@@ -256,11 +256,15 @@ def addSelCrs(request):
         if (request.method == 'POST') & (request.POST.get('AddCrs') == 'yes'):
             New_SelCrs = forms.SelCrs_Form(data=request.POST)
             if New_SelCrs.is_valid():
-                SeldCrs=New_SelCrs.cleaned_data['SelCrs_Course']
-                Stu=models.StuInfo.objects.filter(Stu_ID=request.session.get('user_id')).first()
-                print(Stu)
-                selCrs=models.SelectCourse(SelCrs_Stu=Stu,SelCrs_Course=SeldCrs)
-                selCrs.save()
+                if models.SelectCourse.objects.filter(SelCrs_Stu=models.StuInfo.objects.filter(Stu_ID=request.session['user_id']).first(),
+                                                      SelCrs_Course=New_SelCrs.cleaned_data['SelCrs_Course']) is not None:
+                    print("You have chosen this course")
+                else:
+                    SeldCrs=New_SelCrs.cleaned_data['SelCrs_Course']
+                    Stu=models.StuInfo.objects.filter(Stu_ID=request.session.get('user_id')).first()
+                    print(Stu)
+                    selCrs=models.SelectCourse(SelCrs_Stu=Stu,SelCrs_Course=SeldCrs)
+                    selCrs.save()
         SelCrsform = forms.SelCrs_Form()
         #SelCrsform.Meta.model.SelCrs_Course.empty_label = "******"
         #print(SelCrsform.Meta.model.SelCrs_Course.empty_label)
