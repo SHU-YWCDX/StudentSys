@@ -50,45 +50,7 @@
       <ul class="nav navbar-nav">
         <li class="active"><a href="">主页</a></li>
 
-        <li class="dropdown">
 
-           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              项目
-              <b class="caret"></b>
-           </a>
-            <ul class="dropdown-menu">
-                 {% for key,value in dic_project.items %}
-                <li><a href="http://127.0.0.1:8000/project?proj={{ key }}">{{key}}</a></li>
-                 <li role="separator" class="divider"></li>
-                 {% endfor %}
-            </ul>
-
-        </li>
-                  <li class="dropdown">
-
-           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              实例
-              <b class="caret"></b>
-           </a>
-            <ul class="dropdown-menu">
-                 {% for key,value in dic_project.items %}
-
-                 <li role="separator" class="divider"></li>
-                <li class="dropdown">
-                    <a href="http://127.0.0.1:8000/project?proj={{ key }}" class="dropdown-toggle" data-toggle="dropdown">
-                        {{key}}
-                    <b class="caret"></b>
-                       <ul class="droppdown-menu">
-                            {% for i in value %}
-                           <li><a href='http://127.0.0.1:8000/empfile?proj={{ key }}&exmp={{ i }}'>{{i}}</a></li>
-                            {%endfor%}
-                       </ul>
-
-           </a>
-                </li>
-                 {% endfor %}
-            </ul>
-        </li>
 
       </ul>
 
@@ -220,6 +182,49 @@
                             </tbody>
                           </table>
                         </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">成绩分布图</h3>
+                  </div>
+                    <div>
+                     <div id="container" style="height : 500px"> </div>
+                        <script src="{% static 'js/jquery-3.6.3.min.js' %}"></script>
+                        <script type="text/javascript" src="{% static 'echart/echarts.min.js' %}"></script>
+                          <script type="text/javascript">
+                            var dom = document.getElementById('container');
+                            var myChart = echarts.init(dom, null, {
+                              renderer: 'canvas',
+                              useDirtyRect: false
+                            });
+                            var app = {};
+                            console.log({{SelCrs_Source}})
+                            var option;
+                            option = {
+                          dataset: {{dataset | safe }},
+                          tooltip:{},
+                          grid: { containLabel: true },
+                          xAxis: { name: 'Score' },
+                          yAxis: { type: 'category' },
+                          series: [
+                            {
+                              type: 'bar',
+                              encode: {
+
+                                x: 'Score',
+
+                                y: 'Class'
+                              }
+                            }
+                          ]
+                        };
+                            if (option && typeof option === 'object') {
+                              myChart.setOption(option);
+                            }
+                            window.addEventListener('resize', myChart.resize);
+                          </script>
                     </div>
                 </div>
 

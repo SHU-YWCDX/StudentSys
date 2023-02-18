@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from StudentSys import models
 from StudentSys import forms
+import json
 # Create your views here.
 
 
@@ -291,7 +292,7 @@ def delSelCrs(request):
         if(Delcrs.is_valid()):
             if models.SelectCourse.objects.filter(id=Delcrs.cleaned_data['id'],
                                                   SelCrs_Stu=models.StuInfo.objects.get(Stu_ID=request.session['user_id'])).first() is None:
-                message = "You have not this course"
+                message = "You do not have this course"
             else:
                 models.SelectCourse.objects.filter(id=Delcrs.cleaned_data['id']).delete()
     #searchform = forms.search_Crs()
@@ -305,7 +306,21 @@ def viewSelCrs(request):
     if not (request.session.get('is_login', None)==True) &( request.session.get('mode', None)=='学生'):
         return redirect('/login')
     SelCrs_List = models.SelectCourse.objects.filter(SelCrs_Stu=models.StuInfo.objects.get(Stu_ID=request.session['user_id']))
-    context = {'SelCrs_List': SelCrs_List}
+    SelCrs_Source=[]
+    for Crs in SelCrs_List:
+        if Crs.SelCrs_Grade !=None:
+            SelCrsItem = [Crs.SelCrs_Grade,str("["+Crs.SelCrs_Course.OCrs_Course.Crs_ID+"]"+Crs.SelCrs_Course.OCrs_Course.Crs_Name)]
+        else:
+            SelCrsItem = [0, str("["+Crs.SelCrs_Course.OCrs_Course.Crs_ID+"]"+Crs.SelCrs_Course.OCrs_Course.Crs_Name)]
+        SelCrs_Source.append(SelCrsItem)
+
+    dataset={
+        'source':SelCrs_Source
+    }
+
+    print(dataset)
+    context = {'SelCrs_List': SelCrs_List,
+               'dataset':dataset}
     return render(request, 'viewSelCrs.html', context)
 
 #学生函数
