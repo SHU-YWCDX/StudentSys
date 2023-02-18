@@ -268,6 +268,8 @@ def addSelCrs(request):
 
 #退课
 def delSelCrs(request):
+    if not (request.session.get('is_login', None)==True) &( request.session.get('mode', None)=='学生'):
+        return redirect('/login')
     #获取学生的选课表
     SelCrs_List = models.SelectCourse.objects.filter(SelCrs_Stu=models.StuInfo.objects.get(Stu_ID=request.session['user_id']))
     if (request.method == 'POST') & (request.POST.get('DelCrs') == 'yes'):
@@ -283,6 +285,8 @@ def delSelCrs(request):
     return render(request, 'delSelCrs.html', context)
 #已修课程
 def viewSelCrs(request):
+    if not (request.session.get('is_login', None)==True) &( request.session.get('mode', None)=='学生'):
+        return redirect('/login')
     SelCrs_List = models.SelectCourse.objects.filter(SelCrs_Stu=models.StuInfo.objects.get(Stu_ID=request.session['user_id']))
     context = {'SelCrs_List': SelCrs_List}
     return render(request, 'viewSelCrs.html', context)
